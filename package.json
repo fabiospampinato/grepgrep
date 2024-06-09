@@ -1,0 +1,51 @@
+{
+  "name": "grepgrep",
+  "repository": "github:fabiospampinato/grepgrep",
+  "description": "A grep-like command that uses JavaScript-flavored regular expressions.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "gg": "dist/bin.js",
+    "grepgrep": "dist/bin.js"
+  },
+  "scripts": {
+    "benchmark": "tsex benchmark",
+    "clean": "tsex dist",
+    "compile": "tsex compile",
+    "bundle:cli": "esbuild --bundle --minify --format=esm --platform=node --external:'./index.js' src/bin.ts > dist/bin.js",
+    "bundle:api": "esbuild --bundle --minify --format=esm --platform=node src/index.ts > dist/index.js",
+    "bundle": "npm run bundle:cli && npm run bundle:api",
+    "test": "node test/index.js",
+    "prepublishOnly": "npm run compile && npm run bundle && npm run test"
+  },
+  "keywords": [
+    "grep",
+    "grepgrep",
+    "ecmascript",
+    "javascript",
+    "javascriptjavascript",
+    "regex",
+    "regexp"
+  ],
+  "dependencies": {
+    "function-once": "^3.0.0",
+    "lomemo": "^1.0.0",
+    "promise-make-counter": "^1.0.0",
+    "specialist": "^1.4.0",
+    "string-escape-regex": "^1.0.0",
+    "tiny-colors": "^2.2.0",
+    "tiny-readdir-glob-gitignore": "^2.0.1",
+    "worktank": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "benchloop": "^2.1.1",
+    "fava": "^0.3.2",
+    "tiny-exec": "^1.0.0",
+    "tsex": "^4.0.2",
+    "typescript": "^5.5.0-beta"
+  }
+}
