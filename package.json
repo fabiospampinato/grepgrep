@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/node": "^20.12.12",
     "benchloop": "^2.1.1",
+    "esbuild": "^0.21.4",
     "fava": "^0.3.2",
     "tiny-exec": "^1.0.0",
     "tsex": "^4.0.2",
