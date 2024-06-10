@@ -7,6 +7,7 @@ import process from 'node:process';
 import color from 'tiny-colors';
 import WorkTank from 'worktank';
 import Lines from './lines';
+import {HAS_COLORS} from './constants';
 import {getMatcher, isLineBoundaryRange, isString, isUndefined, isWordBoundaryRange, processTargets, resolveTarget} from './utils';
 import type {Matcher, Options, Result, TargetUnresolved, TargetResolved, Target} from './types';
 
@@ -306,11 +307,13 @@ const searchAndPrint = async ( options: Options, pattern: string, t: Target ): P
 const searchAndPrintParallel = (() => {
 
   const getPool = memoize ( ( options: Options ) => {
+    const COLOR = HAS_COLORS ? '1' : '0';
     return new WorkTank ({
       name: 'grepgrep',
       size: Number ( options.threads || Math.max ( 1, os.cpus ().length - 1 ) ) || 1,
+      env: { COLOR },
       methods: new URL ( './index.js', import.meta.url ),
-      warmup: false,
+      warmup: false
     });
   });
 
