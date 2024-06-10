@@ -1,6 +1,7 @@
 
 /* IMPORT */
 
+import stripAnsi from 'ansi-purge';
 import {describe} from 'fava';
 import fs from 'node:fs';
 import exec from 'tiny-exec';
@@ -9,7 +10,7 @@ import {TESTS_ALL} from './fixtures.js';
 /* HELPERS */
 
 const normalize = str => {
-  return str.replaceAll ( '\r\n', '\n' );
+  return stripAnsi ( str.replaceAll ( '\r\n', '\n' ) );
 };
 
 /* MAIN */
