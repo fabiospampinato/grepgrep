@@ -3,7 +3,7 @@
 
 const TESTS_SHALLOW = [
   {
-    rg: "cat package.json | rg missing -n",
+    rg: "cat package.json | rg missing",
     gg: "cat package.json | node dist/bin.js missing"
   },
   {
@@ -295,15 +295,19 @@ const TESTS_SHALLOW = [
 const TESTS_FILES = [
   {
     rg: "rg --files | sort",
+    gg: "node dist/bin.js --files | sort",
+  },
+  {
+    rg: "rg --files | sort",
     gg: "node dist/bin.js . --files | sort",
   },
   {
     rg: "rg node_modules --files | sort",
-    gg: "node dist/bin.js . node_modules --files | sort",
+    gg: "node dist/bin.js node_modules --files | sort",
   },
   {
     rg: "rg dist --files | sort",
-    gg: "node dist/bin.js . dist --files | sort",
+    gg: "node dist/bin.js dist --files | sort",
   },
   {
     rg: "rg --files --no-ignore | sort",
@@ -311,15 +315,15 @@ const TESTS_FILES = [
   },
   {
     rg: "rg node_modules --files --no-ignore | sort",
-    gg: "node dist/bin.js . node_modules --files --no-ignore | sort",
+    gg: "node dist/bin.js node_modules --files --no-ignore | sort",
   },
   {
     rg: "rg --files --no-ignore-dot | sort",
-    gg: "node dist/bin.js . --files --no-ignore-dot | sort",
+    gg: "node dist/bin.js --files --no-ignore-dot | sort",
   },
   {
     rg: "rg node_modules --files --no-ignore-dot | sort",
-    gg: "node dist/bin.js . node_modules --files --no-ignore-dot | sort",
+    gg: "node dist/bin.js node_modules --files --no-ignore-dot | sort",
   },
   {
     rg: "cd node_modules && rg . --files --no-ignore-parent | sort | sed 's|^\./||'",
@@ -331,67 +335,67 @@ const TESTS_FILES = [
   },
   {
     rg: "rg node_modules --files --no-ignore-vcs | sort",
-    gg: "node dist/bin.js . node_modules --files --no-ignore-vcs | sort",
+    gg: "node dist/bin.js node_modules --files --no-ignore-vcs | sort",
   },
   {
     rg: "rg node_modules --files --max-filesize 1K | sort",
-    gg: "node dist/bin.js . node_modules --files --max-filesize 1k | sort"
+    gg: "node dist/bin.js node_modules --files --max-filesize 1k | sort"
   },
   {
     rg: "rg node_modules --files --max-filesize 1K | sort",
-    gg: "node dist/bin.js . node_modules --files --max-filesize 1K | sort"
+    gg: "node dist/bin.js node_modules --files --max-filesize 1K | sort"
   },
   {
     rg: "rg node_modules --files --max-filesize 2000 | sort",
-    gg: "node dist/bin.js . node_modules --files --max-filesize 2000 | sort"
+    gg: "node dist/bin.js node_modules --files --max-filesize 2000 | sort"
   },
   {
     rg: "rg node_modules --files --max-depth 2 | sort",
-    gg: "node dist/bin.js . node_modules --files --max-depth 2 | sort"
+    gg: "node dist/bin.js node_modules --files --max-depth 2 | sort"
   },
   {
     rg: "rg node_modules/tiny-readdir --files | sort",
-    gg: "node dist/bin.js . node_modules/tiny-readdir --files | sort"
+    gg: "node dist/bin.js node_modules/tiny-readdir --files | sort"
   },
   // {
   //   rg: "rg node_modules --sort accessed --files",
-  //   gg: "node dist/bin.js . node_modules --sort accessed --files"
+  //   gg: "node dist/bin.js node_modules --sort accessed --files"
   // },
   {
     rg: "rg node_modules --sort created --files",
-    gg: "node dist/bin.js . node_modules --sort created --files"
+    gg: "node dist/bin.js node_modules --sort created --files"
   },
   {
     rg: "rg node_modules --sort modified --files",
-    gg: "node dist/bin.js . node_modules --sort modified --files"
+    gg: "node dist/bin.js node_modules --sort modified --files"
   },
   {
     rg: "rg node_modules --sort path --files",
-    gg: "node dist/bin.js . node_modules --sort path --files"
+    gg: "node dist/bin.js node_modules --sort path --files"
   },
   // {
   //   rg: "rg node_modules --sort size --files",
-  //   gg: "node dist/bin.js . node_modules --sort size --files"
+  //   gg: "node dist/bin.js node_modules --sort size --files"
   // },
   // {
   //   rg: "rg node_modules --sortr accessed --files",
-  //   gg: "node dist/bin.js . node_modules --sortr accessed --files"
+  //   gg: "node dist/bin.js node_modules --sortr accessed --files"
   // },
   {
     rg: "rg node_modules --sortr created --files",
-    gg: "node dist/bin.js . node_modules --sortr created --files"
+    gg: "node dist/bin.js node_modules --sortr created --files"
   },
   {
     rg: "rg node_modules --sortr modified --files",
-    gg: "node dist/bin.js . node_modules --sortr modified --files"
+    gg: "node dist/bin.js node_modules --sortr modified --files"
   },
   {
     rg: "rg node_modules --sortr path --files",
-    gg: "node dist/bin.js . node_modules --sortr path --files"
+    gg: "node dist/bin.js node_modules --sortr path --files"
   },
   // {
   //   rg: "rg node_modules --sortr size --files",
-  //   gg: "node dist/bin.js . node_modules --sortr size --files"
+  //   gg: "node dist/bin.js node_modules --sortr size --files"
   // },
 ];
 

@@ -8,7 +8,7 @@ import color from 'tiny-colors';
 import WorkTank from 'worktank';
 import Lines from './lines';
 import {HAS_COLORS} from './constants';
-import {getMatcher, isLineBoundaryRange, isString, isUndefined, isWordBoundaryRange, processTargets, resolveTarget} from './utils';
+import {getMatcher, isLineBoundaryRange, isString, isUndefined, isWordBoundaryRange, processTargetsFromPaths, processTargetsFromStdin, resolveTarget} from './utils';
 import type {Matcher, Options, Result, TargetUnresolved, TargetResolved, Target} from './types';
 
 /* MAIN */
@@ -29,7 +29,7 @@ const run = async ( options: Options, pattern: string, paths: string[] ): Promis
   const onTarget = isString ( options.threads ) ? onTargetParallal : onTargetSerial;
   const onResult = () => options.quiet && process.exit ( 0 );
 
-  const outputs = await processTargets ( paths, options, onTarget, onResult );
+  const outputs = paths.length ? await processTargetsFromPaths ( paths, options, onTarget, onResult ) : await processTargetsFromStdin ( onTarget, onResult );
   const outputsSeparator = options.files || options.filesWithMatch || options.filesWithoutMatch || options.count || options.countMatches ? '' : '\n';
 
   process.stdout['_handle']?.setBlocking?.( true );

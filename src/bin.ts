@@ -55,12 +55,18 @@ bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressio
   .option ( '--type-not, -T <extensions...>', 'Do not search into files with the specified extensions' )
   .option ( '--with-filename, -H', 'Print file names before each match', { default: process.stdin.isTTY } )
   .option ( '--word-regexp, -w', 'Consider only matches surrounded by word boundaries' )
-  .argument ( '<pattern>', 'The JavaScript regex to search for' )
+  .argument ( '[pattern]', 'The JavaScript regex to search for' )
   .argument ( '[targets...]', 'The files or directories to search into, or globs' )
   .action ( async ( opts, args ) => {
     const options = opts as Options; //TSC
-    const pattern = args[0];
-    const paths = args.length > 1 ? args.slice ( 1 ) : ['.'];
-    await run ( options, pattern, paths );
+    if ( options.files ) {
+      const pattern = '';
+      const paths = args.length ? args : ['.'];
+      await run ( options, pattern, paths );
+    } else {
+      const pattern = args[0];
+      const paths = args.slice ( 1 );
+      await run ( options, pattern, paths );
+    }
   })
   .run ();

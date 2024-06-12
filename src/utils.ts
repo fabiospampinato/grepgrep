@@ -1,7 +1,6 @@
 
 /* IMPORT */
 
-import once from 'function-once';
 import memoize from 'lomemo';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -243,22 +242,13 @@ const getSize = ( value?: string ): number | undefined => {
 
 };
 
-const getStdin = once ( async (): Promise<string | undefined> => {
+const getStdin = async (): Promise<string | undefined> => {
 
   // Without a TTY, the process is likely, but not certainly, being piped
 
   if ( process.stdin.isTTY ) return;
 
   return stream2text ( process.stdin );
-
-});
-
-const hasStdin = async (): Promise<boolean> => {
-
-  const stdin = await getStdin ();
-  const hasStdin = isString ( stdin );
-
-  return hasStdin;
 
 };
 
@@ -339,20 +329,6 @@ const isWordBoundaryRange = ( value: string, start: number, end: number ): boole
   if ( !isWordBoundary ( endLeftChar, endRightChar ) ) return false;
 
   return true;
-
-};
-
-const processTargets = async ( paths: string[], options: Options, onTarget: ( target: Target ) => Promise<string | undefined>, onResult: ( result: string ) => void ): Promise<string[]> => {
-
-  if ( await hasStdin () ) {
-
-    return processTargetsFromStdin ( onTarget, onResult );
-
-  } else {
-
-    return processTargetsFromPaths ( paths, options, onTarget, onResult );
-
-  }
 
 };
 
@@ -559,4 +535,4 @@ const uniq = <T> ( values: T[] ): T[] => {
 
 /* EXPORT */
 
-export {binarySearch, comparePaths, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, hasStdin, isBinaryPath, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, processTargets, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};
+export {binarySearch, comparePaths, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, isBinaryPath, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};

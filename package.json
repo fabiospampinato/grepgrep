@@ -31,7 +31,6 @@
     "regexp"
   ],
   "dependencies": {
-    "function-once": "^3.0.0",
     "lomemo": "^1.0.0",
     "promise-make-counter": "^1.0.0",
     "specialist": "^1.4.0",
@@ -44,7 +43,7 @@
     "@types/node": "^20.12.12",
     "ansi-purge": "^1.0.0",
     "benchloop": "^2.1.1",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.21.5",
     "fava": "^0.3.2",
     "tiny-exec": "^1.0.0",
     "tsex": "^4.0.2",
