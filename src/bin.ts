@@ -3,7 +3,7 @@
 /* IMPORT */
 
 import process from 'node:process';
-import {bin} from 'specialist';
+import {bin, exit} from 'specialist';
 import color from 'tiny-colors';
 import {run} from './index.js';
 import type {Options} from './types';
@@ -13,7 +13,7 @@ import type {Options} from './types';
 bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressions.' )
   .autoExit ( false )
   .autoUpdateNotifier ( false )
-  .usage ( `gg ${color.yellow ( '<pattern>' )} ${color.yellow ( '[targets...]' )}` )
+  .usage ( `gg ${color.yellow ( '[pattern]' )} ${color.yellow ( '[targets...]' )}` )
   .usage ( `gg ${color.yellow ( 'needle' )} ${color.yellow ( 'src' )}` )
   .usage ( `gg ${color.yellow ( '/^needle/mi' )} ${color.yellow ( 'src' )} ${color.green ( '--max-filesize' )} ${color.blue ( '50K' )}` )
   .usage ( `gg ${color.yellow ( 'needle' )} ${color.yellow ( 'src' )} ${color.green ( '-i' )}` )
@@ -63,9 +63,11 @@ bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressio
       const pattern = '';
       const paths = args.length ? args : ['.'];
       await run ( options, pattern, paths );
+    } else if ( !args.length ) {
+      exit ( 'Expected at least a pattern to search for' );
     } else {
       const pattern = args[0];
-      const paths = args.slice ( 1 );
+      const paths = args.length > 1 || !process.stdin.isTTY ? args.slice ( 1 ) : ['.'];
       await run ( options, pattern, paths );
     }
   })

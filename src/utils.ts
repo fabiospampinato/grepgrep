@@ -244,11 +244,17 @@ const getSize = ( value?: string ): number | undefined => {
 
 const getStdin = async (): Promise<string | undefined> => {
 
-  // Without a TTY, the process is likely, but not certainly, being piped
-
-  if ( process.stdin.isTTY ) return;
+  if ( !hasStdin () ) return;
 
   return stream2text ( process.stdin );
+
+};
+
+const hasStdin = (): boolean => {
+
+  // Without a TTY, the process is likely, but not certainly, being piped
+
+  return !process.stdin.isTTY;
 
 };
 
@@ -535,4 +541,4 @@ const uniq = <T> ( values: T[] ): T[] => {
 
 /* EXPORT */
 
-export {binarySearch, comparePaths, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, isBinaryPath, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};
+export {binarySearch, comparePaths, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, hasStdin, isBinaryPath, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};

@@ -401,6 +401,10 @@ const TESTS_FILES = [
 
 const TESTS_DEEP = [
   {
+    rg: "rg as -nH --heading --sort path",
+    gg: "node dist/bin.js as --sort path"
+  },
+  {
     rg: "rg as node_modules --files-with-matches | sort",
     gg: "node dist/bin.js as node_modules --files-with-match | sort"
   },
