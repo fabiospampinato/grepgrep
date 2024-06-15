@@ -36,8 +36,8 @@
     "specialist": "^1.4.0",
     "string-escape-regex": "^1.0.0",
     "tiny-colors": "^2.2.1",
-    "tiny-readdir-glob-gitignore": "^2.0.1",
-    "worktank": "^2.7.2"
+    "tiny-readdir-glob-gitignore": "^2.0.3",
+    "worktank": "^2.7.3"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",

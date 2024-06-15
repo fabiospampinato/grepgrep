@@ -401,6 +401,14 @@ const TESTS_FILES = [
 
 const TESTS_DEEP = [
   {
+    rg: "rg as . -nH --heading --files-with-matches | sort | sed 's|^\./||'",
+    gg: "node dist/bin.js as . --files-with-match | sort"
+  },
+  {
+    rg: "rg as ./ -nH --heading --files-with-matches | sort | sed 's|^\./||'",
+    gg: "node dist/bin.js as ./ --files-with-match | sort"
+  },
+  {
     rg: "rg as -nH --heading --sort path",
     gg: "node dist/bin.js as --sort path"
   },
