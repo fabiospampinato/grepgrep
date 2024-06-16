@@ -386,7 +386,7 @@ const processTargetsFromPaths = async ( globs: string[], options: Options, onTar
 
       fs.stat ( fileDatum.filePath, ( error, fileStats ) => {
 
-        if ( error ) exit ( error?.toString () );
+        if ( error ) exit ( error.toString () );
 
         fileDatum.fileStats = fileStats;
 
