@@ -36,11 +36,11 @@ npm install -g grepgrep
 ## Usage
 
 ```
-gg 0.1.0
+gg 0.1.1
 
 USAGE
 
-  gg <pattern> [targets...]
+  gg [pattern] [targets...]
   gg needle src
   gg /^needle/mi src --max-filesize 50K
   gg needle src -i
@@ -49,7 +49,7 @@ USAGE
 
 ARGUMENTS
 
-  <pattern>     The JavaScript regex to search for
+  [pattern]     The JavaScript regex to search for
   [targets...]  The files or directories to search into, or globs
 
 OPTIONS
@@ -88,8 +88,8 @@ OPTIONS
   --sort <dimension>                  Sort results ascendingly by accessed/created/modified/path/size
   --sortr <dimension>                 Sort results descendingly by accessed/created/modified/path/size
   --threads, -j <number>              Number of worker threads to use for searching
-  --type, -t <extensions...>           Search only into files with the specified extensions
-  --type-not, -T <extensions...>       Do not search into files with the specified extensions
+  --type, -t <extensions...>          Search only into files with the specified extensions
+  --type-not, -T <extensions...>      Do not search into files with the specified extensions
   --with-filename, -H                 Print file names before each match
   --word-regexp, -w                   Consider only matches surrounded by word boundaries
 ```
