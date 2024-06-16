@@ -225,6 +225,8 @@ const search = ( options: Options, target: TargetResolved, matcher: Matcher ): R
 
       if ( matchesLineCount >= maxMatchesLine ) break;
 
+      matchesLineCount += 1;
+
     }
 
     if ( matcher.multiline ) { // Potential multi-line match, generalized logic
@@ -245,6 +247,7 @@ const search = ( options: Options, target: TargetResolved, matcher: Matcher ): R
 
         } else {
 
+          matchLineIndexPrev = lineIndex;
           matchesIndexes.push ( lineIndex );
           matchesRanges.push ( [start, end] );
 
@@ -260,17 +263,11 @@ const search = ( options: Options, target: TargetResolved, matcher: Matcher ): R
 
       } else {
 
+        matchLineIndexPrev = matchLineIndex;
         matchesIndexes.push ( matchLineIndex );
         matchesRanges.push ( [matchStart, matchEnd] );
 
       }
-
-    }
-
-    if ( matchLineIndex !== matchLineIndexPrev ) { // Out of limit metadata update
-
-      matchesLineCount += 1;
-      matchLineIndexPrev = matchLineIndex;
 
     }
 

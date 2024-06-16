@@ -171,6 +171,10 @@ const TESTS_SHALLOW = [
     gg: "cat package.json | node dist/bin.js 'javascript.*\\n.*javascript' -m4"
   },
   {
+    rg: "cat package.json | rg $',\\n    \"' -nFU",
+    gg: "cat package.json | node dist/bin.js $',\\n    \"' -F"
+  },
+  {
     rg: "cat package.json | rg s -n -A0",
     gg: "cat package.json | node dist/bin.js s -A0"
   },

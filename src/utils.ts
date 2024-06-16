@@ -134,7 +134,7 @@ const getMatcherString = ( pattern: string ): Matcher => {
 
   };
 
-  matcher.multiline = false;
+  matcher.multiline = /\r?\n|\r/.test ( pattern );
 
   return matcher;
 
