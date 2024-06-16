@@ -310,7 +310,7 @@ const searchAndPrintParallel = (() => {
     const COLOR = HAS_COLORS ? '1' : '0';
     return new WorkTank ({
       name: 'grepgrep',
-      size: Number ( options.threads || Math.max ( 1, os.cpus ().length - 1 ) ) || 1,
+      size: Number ( options.threads ) || Math.max ( 1, os.cpus ().length - 1 ) || 1,
       env: { COLOR },
       methods: new URL ( './index.js', import.meta.url ),
       warmup: false
