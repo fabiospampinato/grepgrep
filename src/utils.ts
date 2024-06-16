@@ -2,11 +2,12 @@
 /* IMPORT */
 
 import memoize from 'lomemo';
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import {text as stream2text} from 'node:stream/consumers';
 import makeCounterPromise from 'promise-make-counter';
+import {exit} from 'specialist';
 import escapeRegex from 'string-escape-regex';
 import readdir from 'tiny-readdir-glob-gitignore';
 import {NO_STATS} from './constants';
@@ -383,7 +384,9 @@ const processTargetsFromPaths = async ( globs: string[], options: Options, onTar
 
       statting.increment ();
 
-      fs.stat ( fileDatum.filePath ).then ( fileStats => {
+      fs.stat ( fileDatum.filePath, ( error, fileStats ) => {
+
+        if ( error ) exit ( error?.toString () );
 
         fileDatum.fileStats = fileStats;
 
@@ -525,7 +528,7 @@ const resolveTarget = async ( options: Options, target: Target ): Promise<Target
   } else { // Unresolved, and we need to actually resolve it
 
     const {name, filePath} = target;
-    const content = await fs.readFile ( filePath, 'utf8' ); //TODO: We could already know the file size, no need to have the file statted again under the hood, potentially
+    const content = await fs.promises.readFile ( filePath, 'utf8' ); //TODO: We could already know the file size, no need to have the file statted again under the hood, potentially
 
     return { name, content };
 
