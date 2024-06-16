@@ -55,7 +55,7 @@ type Result = {
   matchesRanges?: number[][],
   matchesCount?: number,
   matchesLineCount?: number,
-  target: TargetResolved
+  name: string
 };
 
 type Stats = {

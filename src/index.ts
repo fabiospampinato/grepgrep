@@ -41,8 +41,7 @@ const run = async ( options: Options, pattern: string, paths: string[] ): Promis
 
 const print = ( options: Options, result: Result ): string => {
 
-  const {lines, matchesIndexes, matchesRanges, matchesCount, matchesLineCount, target} = result;
-  const {name} = target;
+  const {lines, matchesIndexes, matchesRanges, matchesCount, matchesLineCount, name} = result;
 
   if ( options.countMatches || ( options.count && options.onlyMatching ) ) { // Count-matches-only output
 
@@ -138,7 +137,7 @@ const print = ( options: Options, result: Result ): string => {
 
             const start = ranges[ri];
             const end = ranges[ri + 1];
-            const match = color.red ( target.content.slice ( start, end ) );
+            const match = color.red ( lines.getSlice ( start, end ) );
             const prefixKindSeparator = options.fieldMatchSeparator ?? ':';
             const prefixLineNumber = options.lineNumber ? `${color.green ( `${lineIndex + 1}` )}${prefixKindSeparator}` : '';
             const prefixByteOffset = options.byteOffset ? `${color.green ( `${start}` )}${prefixKindSeparator}` : '';
@@ -179,14 +178,15 @@ const print = ( options: Options, result: Result ): string => {
 
 const search = ( options: Options, target: TargetResolved, matcher: Matcher ): Result | undefined => {
 
-  if ( options.files ) return { target };
+  const {name, content} = target;
+
+  if ( options.files ) return { name };
 
   const multiMatches = !options.files && !options.filesWithMatch && !options.filesWithoutMatch;
   const maxMatchesLine = Number ( !multiMatches ? 1 : options.passthru ? Infinity : options.maxCount ?? Infinity );
 
   if ( maxMatchesLine <= 0 ) return;
 
-  let content = target.content;
   let lines: Lines | undefined;
   let matchesIndexes: number[] | undefined;
   let matchesRanges: number[][] | undefined;
@@ -210,7 +210,7 @@ const search = ( options: Options, target: TargetResolved, matcher: Matcher ): R
 
     if ( options.wordRegexp && !isWordBoundaryRange ( content, matchStart, matchEnd ) ) continue;
 
-    if ( options.filesWithMatch ) return { target };
+    if ( options.filesWithMatch ) return { name };
 
     if ( options.filesWithoutMatch ) return;
 
@@ -278,13 +278,13 @@ const search = ( options: Options, target: TargetResolved, matcher: Matcher ): R
 
   if ( !lines || !matchesIndexes || !matchesRanges ) {
 
-    if ( options.filesWithoutMatch ) return { target };
+    if ( options.filesWithoutMatch ) return { name };
 
     return;
 
   } else {
 
-    return { lines, matchesIndexes, matchesRanges, matchesCount, matchesLineCount, target };
+    return { lines, matchesIndexes, matchesRanges, matchesCount, matchesLineCount, name };
 
   }
 

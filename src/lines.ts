@@ -182,6 +182,12 @@ class Lines {
 
   }
 
+  getSlice ( start: number, end: number ): string {
+
+    return this.value.slice ( start, end );
+
+  }
+
 }
 
 /* EXPORT */
