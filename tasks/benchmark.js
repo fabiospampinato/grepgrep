@@ -2,7 +2,7 @@
 /* IMPORT */
 
 import benchmark from 'benchloop';
-import exec from 'tiny-exec';
+import exec from 'nanoexec';
 import {TESTS_SHALLOW, TESTS_FILES, TESTS_DEEP} from '../test/fixtures.js';
 
 /* MAIN */

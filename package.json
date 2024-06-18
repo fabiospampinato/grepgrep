@@ -31,7 +31,7 @@
     "regexp"
   ],
   "dependencies": {
-    "lomemo": "^1.0.0",
+    "lomemo-one": "^1.0.1",
     "promise-make-counter": "^1.0.0",
     "specialist": "^1.4.0",
     "string-escape-regex": "^1.0.0",
@@ -45,7 +45,7 @@
     "benchloop": "^2.1.1",
     "esbuild": "^0.21.5",
     "fava": "^0.3.2",
-    "tiny-exec": "^1.0.0",
+    "nanoexec": "^1.0.0",
     "tsex": "^4.0.2",
     "typescript": "^5.5.0-beta"
   }

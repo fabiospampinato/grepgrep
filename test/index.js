@@ -3,8 +3,8 @@
 
 import stripAnsi from 'ansi-purge';
 import {describe} from 'fava';
+import exec from 'nanoexec';
 import fs from 'node:fs';
-import exec from 'tiny-exec';
 import {TESTS_ALL} from './fixtures.js';
 
 /* HELPERS */
@@ -33,14 +33,18 @@ describe ( 'GrepGrep', it => {
       const stdout_rg = normalize ( result_rg.stdout.toString () );
       const stdout_gg = normalize ( result_gg.stdout.toString () );
 
-      if ( stdout_rg !== stdout_gg ) {
+      const isSameOk = ( ok_rg === ok_gg );
+      const isSameStderr = ( stderr_rg === stderr_gg );
+      const isSameStdout = ( stdout_rg === stdout_gg );
+
+      if ( !isSameStdout ) {
         fs.writeFileSync ( 'test_rg_stdout.txt', result_rg.stdout );
         fs.writeFileSync ( 'test_gg_stdout.txt', result_gg.stdout );
       }
 
-      t.is ( ok_rg, ok_gg );
-      t.is ( stderr_rg, stderr_gg );
-      t.is ( stdout_rg, stdout_gg );
+      t.true ( isSameOk );
+      t.true ( isSameStderr );
+      t.true ( isSameStdout );
 
     });
 

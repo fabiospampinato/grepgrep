@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import memoize from 'lomemo';
+import memoize from 'lomemo-one';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';

@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import memoize from 'lomemo';
+import memoize from 'lomemo-one';
 import os from 'node:os';
 import process from 'node:process';
 import color from 'tiny-colors';
@@ -314,9 +314,9 @@ const searchAndPrintParallel = (() => {
     });
   });
 
-  return ( options: Options, pattern: string, t: Target ): Promise<string | undefined> => {
+  return ( options: Options, pattern: string, target: Target ): Promise<string | undefined> => {
 
-    return getPool ( options ).exec ( 'searchAndPrint', [options, pattern, t] );
+    return getPool ( options ).exec ( 'searchAndPrint', [options, pattern, target] );
 
   };
 
