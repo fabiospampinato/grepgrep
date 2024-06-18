@@ -29,10 +29,12 @@ bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressio
   .option ( '--count-matches', 'Print only the number of individual matches' )
   .option ( '--field-context-separator <string>', 'The string to print in the gutter for context lines' )
   .option ( '--field-match-separator <string>', 'The string to print in the gutter for matching lines' )
+  .option ( '--filename, -H', 'Print file names before each match' )
   .option ( '--files', 'Print the paths of files that would be searched into' )
   .option ( '--files-with-match, -l', 'Print only the paths of files with matches' )
   .option ( '--files-without-match, -L', 'Print only the paths of files without matches' )
   .option ( '--fixed-strings, -F', 'Treat the pattern as a literal string instead of a regex' )
+  .option ( '--heading', 'Print file names as headings before the matches for each file', { default: true } )
   .option ( '--hidden, -.', 'Search into hidden files and hidden directories too' )
   .option ( '--ignore-case, -i', 'Ignore the casing when searching' )
   .option ( '--line-number, -n', 'Print the line number for each match', { default: true } )
@@ -53,7 +55,6 @@ bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressio
   .option ( '--threads, -j <number>', 'Number of worker threads to use for searching' )
   .option ( '--type, -t <extensions...>', 'Search only into files with the specified extensions' )
   .option ( '--type-not, -T <extensions...>', 'Do not search into files with the specified extensions' )
-  .option ( '--with-filename, -H', 'Print file names before each match' )
   .option ( '--word-regexp, -w', 'Consider only matches surrounded by word boundaries' )
   .argument ( '[pattern]', 'The JavaScript regex to search for' )
   .argument ( '[targets...]', 'The files or directories to search into, or globs' )
@@ -68,7 +69,7 @@ bin ( 'gg', 'A grep-like command that uses JavaScript-flavored regular expressio
     } else {
       const pattern = args[0];
       const paths = args.length > 1 || !process.stdin.isTTY ? args.slice ( 1 ) : ['.'];
-      options.withFilename ??= !!paths.length; //TODO: Special-cased a single path pointing to a file
+      options.filename ??= paths.length ? true : undefined; //TODO: Special-cased a single path pointing to a file
       await run ( options, pattern, paths );
     }
   })

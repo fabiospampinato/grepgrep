@@ -30,7 +30,7 @@ const run = async ( options: Options, pattern: string, paths: string[] ): Promis
   const onResult = () => options.quiet && process.exit ( 0 );
 
   const outputs = paths.length ? await processTargetsFromPaths ( paths, options, onTarget, onResult ) : await processTargetsFromStdin ( onTarget, onResult );
-  const outputsSeparator = options.files || options.filesWithMatch || options.filesWithoutMatch || options.count || options.countMatches ? '' : '\n';
+  const outputsSeparator = options.files || options.filesWithMatch || options.filesWithoutMatch || options.count || options.countMatches || options.heading === false ? '' : '\n';
 
   process.stdout['_handle']?.setBlocking?.( true );
   process.stdout.write ( outputs.join ( outputsSeparator ) );
@@ -45,14 +45,14 @@ const print = ( options: Options, result: Result ): string => {
 
   if ( options.countMatches || ( options.count && options.onlyMatching ) ) { // Count-matches-only output
 
-    const prefixName = options.withFilename ? `${color.magenta ( name )}:` : '';
+    const prefixName = options.filename ? `${color.magenta ( name )}:` : '';
     const count = matchesCount || 0;
 
     return `${prefixName}${count}\n`;
 
   } else if ( options.count ) { // Count-only output
 
-    const prefixName = options.withFilename ? `${color.magenta ( name )}:` : '';
+    const prefixName = options.filename ? `${color.magenta ( name )}:` : '';
     const count = matchesLineCount || 0;
 
     return `${prefixName}${count}\n`;
@@ -66,7 +66,7 @@ const print = ( options: Options, result: Result ): string => {
     let countContextual = 0;
     let lineIndexPrev = -1;
 
-    if ( options.withFilename || options.files || options.filesWithMatch || options.filesWithoutMatch ) { // File name header
+    if ( ( options.filename && options.heading ) || options.files || options.filesWithMatch || options.filesWithoutMatch ) { // File name header
 
       output += `${color.magenta ( name )}\n`;
 
@@ -91,9 +91,10 @@ const print = ( options: Options, result: Result ): string => {
             const [start] = lines.getLineRange ( ai );
             const line = lines.getLineAtIndex ( ai );
             const prefixKindSeparator = options.fieldContextSeparator ?? '-';
+            const prefixName = options.filename && !options.heading ? `${color.magenta ( name )}${prefixKindSeparator}` : '';
             const prefixLineNumber = options.lineNumber ? `${color.green ( `${ai + 1}` )}${prefixKindSeparator}` : '';
             const prefixByteOffset = options.byteOffset ? `${color.green ( `${start}` )}${prefixKindSeparator}` : '';
-            const lineProcessed = `${prefixLineNumber}${prefixByteOffset}${line}\n`;
+            const lineProcessed = `${prefixName}${prefixLineNumber}${prefixByteOffset}${line}\n`;
 
             output += lineProcessed;
             lineIndexPrev = ai;
@@ -117,9 +118,10 @@ const print = ( options: Options, result: Result ): string => {
             const line = lines.getLineAtIndex ( bi );
             const prefixBlockSeparator = countContextual && lineIndexPrev >= 0 && bi > lineIndexPrev + 1 ? `${options.contextSeparator ?? '--'}\n` : '';
             const prefixKindSeparator = options.fieldContextSeparator ?? '-';
+            const prefixName = options.filename && !options.heading ? `${color.magenta ( name )}${prefixKindSeparator}` : '';
             const prefixLineNumber = options.lineNumber ? `${color.green ( `${bi + 1}` )}${prefixKindSeparator}` : '';
             const prefixByteOffset = options.byteOffset ? `${color.green ( `${start}` )}${prefixKindSeparator}` : '';
-            const lineProcessed = `${prefixBlockSeparator}${prefixLineNumber}${prefixByteOffset}${line}\n`;
+            const lineProcessed = `${prefixBlockSeparator}${prefixName}${prefixLineNumber}${prefixByteOffset}${line}\n`;
 
             output += lineProcessed;
             lineIndexPrev = bi;
@@ -139,9 +141,10 @@ const print = ( options: Options, result: Result ): string => {
             const end = ranges[ri + 1];
             const match = color.red ( lines.getSlice ( start, end ) );
             const prefixKindSeparator = options.fieldMatchSeparator ?? ':';
+            const prefixName = options.filename && !options.heading ? `${color.magenta ( name )}${prefixKindSeparator}` : '';
             const prefixLineNumber = options.lineNumber ? `${color.green ( `${lineIndex + 1}` )}${prefixKindSeparator}` : '';
             const prefixByteOffset = options.byteOffset ? `${color.green ( `${start}` )}${prefixKindSeparator}` : '';
-            const lineProcessed = `${prefixLineNumber}${prefixByteOffset}${match}\n`;
+            const lineProcessed = `${prefixName}${prefixLineNumber}${prefixByteOffset}${match}\n`;
 
             output += lineProcessed;
 
@@ -157,9 +160,10 @@ const print = ( options: Options, result: Result ): string => {
           const line = lines.getLineHighlightedAtRange ( lineRange, ranges, color.red );
           const prefixBlockSeparator = countContextual && lineIndexPrev >= 0 && lineIndex > lineIndexPrev + 1 ? `${options.contextSeparator ?? '--'}\n` : '';
           const prefixKindSeparator = options.fieldMatchSeparator ?? ':';
+          const prefixName = options.filename && !options.heading ? `${color.magenta ( name )}${prefixKindSeparator}` : '';
           const prefixLineNumber = options.lineNumber ? `${color.green ( `${lineIndex + 1}` )}${prefixKindSeparator}` : '';
           const prefixByteOffset = options.byteOffset ? `${color.green ( `${lineRange[0]}` )}${prefixKindSeparator}` : '';
-          const linePrefixed = `${prefixBlockSeparator}${prefixLineNumber}${prefixByteOffset}${line}\n`;
+          const linePrefixed = `${prefixBlockSeparator}${prefixName}${prefixLineNumber}${prefixByteOffset}${line}\n`;
 
           output += linePrefixed;
           lineIndexPrev = lineIndex;

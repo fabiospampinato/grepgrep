@@ -499,7 +499,23 @@ const TESTS_DEEP = [
   {
     rg: 'rg display node_modules > /dev/null',
     gg: 'node dist/bin.js display node_modules > /dev/null'
-  }
+  },
+  {
+    rg: 'rg javascript node_modules -n --sort path --no-heading',
+    gg: 'node dist/bin.js javascript node_modules --sort path --no-heading'
+  },
+  // {
+  //   rg: 'rg javascript node_modules -n --sort path --no-heading -C2',
+  //   gg: 'node dist/bin.js javascript node_modules --sort path --no-heading -C2'
+  // },
+  {
+    rg: 'rg javascript node_modules -n --sort path --no-heading --no-filename',
+    gg: 'node dist/bin.js javascript node_modules --sort path --no-heading --no-filename'
+  },
+  // {
+  //   rg: 'rg javascript node_modules -n --sort path --no-heading --no-filename -C2',
+  //   gg: 'node dist/bin.js javascript node_modules --sort path --no-heading --no-filename -C2'
+  // },
 ];
 
 const TESTS_ALL = [

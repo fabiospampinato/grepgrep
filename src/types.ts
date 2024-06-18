@@ -21,10 +21,12 @@ type Options = {
   countMatches?: boolean,
   fieldContextSeparator?: string,
   fieldMatchSeparator?: string,
+  filename?: boolean,
   files?: boolean,
   filesWithMatch?: boolean,
   filesWithoutMatch?: boolean,
   fixedStrings?: boolean,
+  heading?: boolean,
   hidden?: boolean,
   ignore?: boolean,
   ignoreCase?: boolean,
@@ -45,7 +47,6 @@ type Options = {
   threads?: number,
   type?: string[],
   typeNot?: string[],
-  withFilename?: boolean,
   wordRegexp?: boolean
 };
 

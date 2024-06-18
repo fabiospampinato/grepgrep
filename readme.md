@@ -66,10 +66,12 @@ OPTIONS
   --count-matches                     Print only the number of individual matches
   --field-context-separator <string>  The string to print in the gutter for context lines
   --field-match-separator <string>    The string to print in the gutter for matching lines
+  --filename, -H                      Print file names before each match
   --files                             Print the paths of files that would be searched into
   --files-with-match, -l              Print only the paths of files with matches
   --files-without-match, -L           Print only the paths of files without matches
   --fixed-strings, -F                 Treat the pattern as a literal string instead of a regex
+  --heading                           Print file names as headings before the matches for each file
   --hidden, -.                        Search into hidden files and hidden directories too
   --ignore-case, -i                   Ignore the casing when searching
   --line-number, -n                   Print the line number for each match
@@ -90,7 +92,6 @@ OPTIONS
   --threads, -j <number>              Number of worker threads to use for searching
   --type, -t <extensions...>          Search only into files with the specified extensions
   --type-not, -T <extensions...>      Do not search into files with the specified extensions
-  --with-filename, -H                 Print file names before each match
   --word-regexp, -w                   Consider only matches surrounded by word boundaries
 ```
 
