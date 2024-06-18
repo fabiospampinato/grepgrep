@@ -36,7 +36,7 @@ npm install -g grepgrep
 ## Usage
 
 ```
-gg 0.1.1
+gg 0.1.2
 
 USAGE
 
