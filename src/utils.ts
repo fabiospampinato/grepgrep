@@ -67,6 +67,22 @@ const comparePaths = ( a: string, b: string ): -1 | 0 | 1 => {
 
 };
 
+const getFiles = async ( globs: string[], options: Options ): Promise<string[]> => {
+
+  const [fileGlobs, otherGlobs] = partition ( globs, glob => {
+    return isFile ( path.resolve ( process.cwd (), glob ) );
+  });
+
+  const staticPaths = fileGlobs.map ( glob => {
+    return path.resolve ( process.cwd (), glob );
+  });
+
+  const {files: dynamicPaths} = await getReaddir ( otherGlobs, options );
+
+  return [...staticPaths, ...dynamicPaths];
+
+};
+
 const getMatcher = memoize ( ( pattern: string, isCaseInsensitive?: boolean, isFixed?: boolean ): Matcher => {
 
   const [source, flags] = getRegexParts ( pattern );
@@ -276,6 +292,22 @@ const isBinaryPath = (() => {
 
 })();
 
+const isFile = ( targetPath: string ): boolean => {
+
+  try {
+
+    const stats = fs.statSync ( targetPath );
+
+    return stats.isFile ();
+
+  } catch {
+
+    return false;
+
+  }
+
+};
+
 const isLineBoundaryRange = ( value: string, start: number, end: number ): boolean => {
 
   if ( start === 0 || end === value.length ) return true;
@@ -339,11 +371,29 @@ const isWordBoundaryRange = ( value: string, start: number, end: number ): boole
 
 };
 
+const partition = <T> ( values: T[], filterer: ( value: T, index: number, values: T[] ) => boolean ): [T[], T[]] => {
+
+  const positive: T[] = [];
+  const negative: T[] = [];
+
+  for ( let i = 0, l = values.length; i < l; i++ ) {
+
+    const value = values[i];
+    const bucket = filterer ( value, i, values ) ? positive : negative;
+
+    bucket.push ( value );
+
+  }
+
+  return [positive, negative];
+
+};
+
 const processTargetsFromPaths = async ( globs: string[], options: Options, onTarget: ( target: TargetUnresolved ) => Promise<string | undefined>, onResult: ( result: string ) => void ): Promise<string[]> => {
 
   /* FILTERING - TYPE */
 
-  let {files} = await getReaddir ( globs, options );
+  let files = await getFiles ( globs, options );
 
   if ( options.type?.length || options.typeNot?.length ) {
 
@@ -544,4 +594,4 @@ const uniq = <T> ( values: T[] ): T[] => {
 
 /* EXPORT */
 
-export {binarySearch, comparePaths, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, hasStdin, isBinaryPath, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};
+export {binarySearch, comparePaths, getFiles, getMatcher, getMatcherRegex, getMatcherString, getPathExtension, getPathRelative, getReaddir, getRegex, getRegexParts, getSize, getStdin, hasStdin, isBinaryPath, isFile, isLineBoundaryRange, isRegexStatic, isString, isUndefined, isWordBoundary, isWordBoundaryRange, partition, processTargetsFromPaths, processTargetsFromStdin, resolveTarget, uniq};

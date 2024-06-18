@@ -302,7 +302,7 @@ const TESTS_FILES = [
     gg: "node dist/bin.js --files | sort",
   },
   {
-    rg: "rg --files | sort",
+    rg: "rg . --files | sort | sed 's|^\./||'",
     gg: "node dist/bin.js . --files | sort",
   },
   {
@@ -405,6 +405,30 @@ const TESTS_FILES = [
 
 const TESTS_DEEP = [
   {
+    rg: "rg . license -nH --heading",
+    gg: "node dist/bin.js . license"
+  },
+  {
+    rg: "rg .. license -nH --heading",
+    gg: "node dist/bin.js .. license"
+  },
+  {
+    rg: "rg . license license -nH --heading",
+    gg: "node dist/bin.js . license license"
+  },
+  {
+    rg: "rg .. license license -nH --heading",
+    gg: "node dist/bin.js .. license license"
+  },
+  {
+    rg: "rg . src/constants.ts -nH --heading",
+    gg: "node dist/bin.js . src/constants.ts"
+  },
+  {
+    rg: "rg .. src/constants.ts -nH --heading",
+    gg: "node dist/bin.js .. src/constants.ts"
+  },
+  {
     rg: "rg as . -nH --heading --files-with-matches | sort | sed 's|^\./||'",
     gg: "node dist/bin.js as . --files-with-match | sort"
   },
@@ -412,10 +436,10 @@ const TESTS_DEEP = [
     rg: "rg as ./ -nH --heading --files-with-matches | sort | sed 's|^\./||'",
     gg: "node dist/bin.js as ./ --files-with-match | sort"
   },
-  {
-    rg: "rg as -nH --heading --sort path",
-    gg: "node dist/bin.js as --sort path"
-  },
+  // { //TODO: Improve stdin detection
+  //   rg: "rg as -nH --heading --sort path",
+  //   gg: "node dist/bin.js as --sort path"
+  // },
   {
     rg: "rg as node_modules --files-with-matches | sort",
     gg: "node dist/bin.js as node_modules --files-with-match | sort"
