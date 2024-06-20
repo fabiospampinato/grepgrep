@@ -436,6 +436,14 @@ const TESTS_DEEP = [
     rg: "rg as ./ -nH --heading --files-with-matches | sort | sed 's|^\./||'",
     gg: "node dist/bin.js as ./ --files-with-match | sort"
   },
+  {
+    rg: "rg '[A-Z]' . --sort path -nH --heading | sed 's|^\./||'",
+    gg: "node dist/bin.js '[A-Z]' . --sort path"
+  },
+  {
+    rg: "rg '[A-Z]' ./ --sort path -nH --heading | sed 's|^\./||'",
+    gg: "node dist/bin.js '[A-Z]' ./ --sort path"
+  },
   // { //TODO: Improve stdin detection
   //   rg: "rg as -nH --heading --sort path",
   //   gg: "node dist/bin.js as --sort path"
