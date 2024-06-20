@@ -2,7 +2,7 @@
   "name": "grepgrep",
   "repository": "github:fabiospampinato/grepgrep",
   "description": "A grep-like command that uses JavaScript-flavored regular expressions.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
